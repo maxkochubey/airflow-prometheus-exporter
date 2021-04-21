@@ -100,6 +100,10 @@ def get_dag_duration_info():
                     ),
                 ),
             )
+            .filter(
+                TaskInstance.start_date.isnot(None),
+                TaskInstance.end_date.isnot(None),
+            )
             .group_by(
                 max_execution_dt_query.c.dag_id,
                 max_execution_dt_query.c.max_execution_dt,
@@ -120,10 +124,6 @@ def get_dag_duration_info():
                     DagRun.execution_date
                     == dag_start_dt_query.c.execution_date,
                 ),
-            )
-            .filter(
-                TaskInstance.start_date.isnot(None),
-                TaskInstance.end_date.isnot(None),
             )
             .all()
         )

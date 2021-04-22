@@ -10,14 +10,14 @@ with open('README.md', encoding='utf-8') as readme_file:
 
 install_requirements = [
     'apache-airflow>=1.10.15',
-    'prometheus_client>=0.4.2',
-],
+    'prometheus_client>=0.4.2'
+]
 
-extras_require={
+extras_require = {
     'dev': [
         'bumpversion',
         'tox',
-        'twine',
+        'twine'
     ]
 }
 

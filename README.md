@@ -10,8 +10,8 @@ The exporter is based on this [prometheus exporter for Airflow](https://github.c
 
 The plugin has been tested with:
 
-- Airflow >= 1.10.4
-- Python 3.6+
+- Airflow >= 1.10.15
+- Python 3.8+
 
 The scheduler metrics assume that there is a DAG named `canary_dag`. In our setup, the `canary_dag` is a DAG which has a tasks which perform very simple actions such as establishing database connections. This DAG is used to test the uptime of the Airflow scheduler itself.
 

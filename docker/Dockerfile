@@ -1,30 +1,7 @@
-FROM python:3.6-slim
+FROM apache/airflow:1.10.15-python3.8
 
-ARG AIRFLOW_USER_HOME=/usr/local/airflow
-ENV AIRFLOW_HOME=${AIRFLOW_USER_HOME}
-
-RUN set -ex \
-    && apt-get update -yqq \
-    && apt-get upgrade -yqq \
-    && apt-get install -yqq --no-install-recommends \
-        build-essential \
-        apt-utils \
-    && useradd -ms /bin/bash -d ${AIRFLOW_USER_HOME} airflow \
-    && pip install -U pip
-
-COPY docker/airflow.sh ${AIRFLOW_USER_HOME}/airflow.sh
-RUN chmod +x ${AIRFLOW_USER_HOME}/airflow.sh
-
-COPY . /airflow-prometheus-exporter
+COPY --chown=$AIRFLOW_UID:$AIRFLOW_GID . /airflow-prometheus-exporter
 WORKDIR /airflow-prometheus-exporter
-RUN pip install -e .
+RUN pip install --no-cache-dir -e .
 
-RUN chown -R airflow: ${AIRFLOW_USER_HOME}
-
-EXPOSE 8080
-
-USER airflow
-WORKDIR ${AIRFLOW_USER_HOME}
-RUN airflow initdb
-
-CMD ["./airflow.sh"]
+WORKDIR ${AIRFLOW_HOME}

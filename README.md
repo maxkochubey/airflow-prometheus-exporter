@@ -1,6 +1,6 @@
 # Airflow Prometheus Exporter
 
-![Build Status](https://github.com/maxkochubey/airflow-prometheus-exporter/actions/workflows/build.yml/badge.svg)]
+![Build Status](https://github.com/maxkochubey/airflow-prometheus-exporter/actions/workflows/build.yml/badge.svg)
 
 The Airflow Prometheus Exporter exposes various metrics about the Scheduler, DAGs and Tasks which helps improve the observability of an Airflow cluster.
 

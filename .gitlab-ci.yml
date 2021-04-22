@@ -1,0 +1,36 @@
+variables:
+  HTTP_PROXY:  $PROXY_URL
+  HTTPS_PROXY: $PROXY_URL
+  NO_PROXY:    $PROXY_EXCLUDE
+  
+image: $CDP_PYTHON_BUILD_COMMON_IMAGE
+
+stages:
+  - Static Analysis
+  - Build
+  - Publish
+
+flake8:
+  stage: Static Analysis
+  script:
+    - flake8 --max-line-length=120 ./
+
+Build:
+  stage: Build
+  script:
+    - python3 -m build
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/dist/
+    expire_in: 30 mins
+  only:
+  - tags
+
+Publish:
+  stage: Publish
+  script:
+    - twine upload $CI_PROJECT_DIR/dist/*
+  dependencies:
+    - Build
+  only:
+    - tags
